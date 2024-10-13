@@ -45,22 +45,31 @@ class UserControllerTest2 {
                 .apply(springSecurity()).build();
     }
     @Test
+    @DisplayName("User更新画面")
+    @WithMockUser
     void test_getList() throws Exception {
         // HTTPリクエストに対するレスポンスの検証
         MvcResult result = mockMvc.perform(get("/user/list")) // URLにアクセス
             .andExpect(status().isOk()) // ステータスを確認
-            .andExpect(model().attributeExists("user")) // Modelの内容を確認
+            .andExpect(model().attributeExists("userlist")) // Modelの内容を確認
             .andExpect(model().hasNoErrors()) // Modelのエラー有無の確認
             .andExpect(view().name("user/list")) // viewの確認
             .andReturn(); // 内容の取得
 
-        // userの検証
-        // Modelからuserを取り出す
-        User user = (User)result.getModelAndView().getModel().get("user");
-        assertEquals(1, user.getId());
-        assertEquals("キラメキ太郎", user.getName());
-        
+        // userlistの検証
+        // Modelからuserlistを取り出す
+        //件数が３件であること
+        List<User> userlist = (List<User>)result.getModelAndView().getModel().get("userlist");
+        assertEquals(1, userlist.get(0).getId());
+        assertEquals("キラメキ太郎", userlist.get(0).getName());
+
+        assertEquals(2, userlist.get(1).getId());
+        assertEquals("キラメキ次郎", userlist.get(1).getName());
+
+        assertEquals(3, userlist.get(2).getId());
+        assertEquals("キラメキ花子", userlist.get(2).getName());
+
     }
-    
+
 
 }
