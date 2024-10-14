@@ -23,6 +23,7 @@
                 th:each="item:${T(com.techacademy.entity.User.Gender).values()}"
                 th:value="${item}" th:text="${item}" th:selected="*{gender} == ${item}">
         </select>
+        <span th:errors="*{gender}" class="err"></span>
         <br>
         <label for="age">年齢</label>
       <input type="text" th:field="*{age}" th:errorclass="err">
